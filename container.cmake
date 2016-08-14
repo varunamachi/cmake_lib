@@ -6,14 +6,10 @@ if( DEFINED VQ_PROJECT_DEFINED )
 endif()
 set( VQ_IS_PROJECT_CONTAINER ON )
 
-# file( TO_CMAKE_PATH "$ENV{PROJECT_ROOT}" PROJECT_ROOT )
-
-# file( TO_CMAKE_PATH "$ENV{${VQ_PROJECT_NAME}_ROOT}" PROJECT_ROOT )
-
-set( VQ_BUILD_DIR       ${PROJECT_ROOT}/builds )
-set( VQ_OUTPUT_DIR      ${PROJECT_ROOT}/output )
-set( VQ_SRC_DIR         ${PROJECT_ROOT}/source )
-set( VQ_TEST_DIR        ${PROJECT_ROOT}/tests )
+set( VQ_BUILD_DIR       ${QUARTZ_ROOT}/builds )
+set( VQ_OUTPUT_DIR      ${QUARTZ_ROOT}/output )
+set( VQ_SRC_DIR         ${QUARTZ_ROOT}/source )
+set( VQ_TEST_DIR        ${QUARTZ_ROOT}/tests )
 
 set( CMAKE_INSTALL_PREFIX ${VQ_OUTPUT_DIR} )
 set( SUBPROJECTS "" )
@@ -22,4 +18,3 @@ macro( add_project MODULE_NAME )
     add_subdirectory( ${MODULE_NAME} )
     set_property( GLOBAL APPEND PROPERTY "SUBPROJECTS"  ${MODULE_NAME} )
 endmacro()
-
