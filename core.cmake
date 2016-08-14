@@ -10,28 +10,32 @@ endif()
 
 
 if( ${CMAKE_BINARY_DIR} STREQUAL ${CMAKE_SOURCE_DIR} )
-    message( FATAL_ERROR "In-source build is not allowed. "
-                         "Choose a different build directory"
-                         " i.e. Run cmake from somewhere else ")
+    message( FATAL_ERROR "Error!! In source build ")
 endif()
 
 if( DEFINED VQ_PROJECT_${PROJECT_NAME}_DEFINED )
     message( FATAL_ERROR "Duplicate project found. Make sure that "
-                         "vqcore.cmake is not included in any subdirectory's "
+                         "core.cmake is not included in any subdirectory's "
                          "CMakeLists.txt" )
 endif()
 
-if( ${CMAKE_CXX_COMPILER_ID} STREQUAL GNU )
-#     if( ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.9 )
-  if( ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.8 )
-        message( FATAL_ERROR "Insufficient GCC version. Minimum is GCC 4.9" )
-    endif()
-elseif( ${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC )
-    if( ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 18 )
-        message( FATAL_ERROR "Insufficient MSVC version. Minimum is MSVC 18"
-                             " i.e Visual Studio 2013" )
-    endif()
-endif()
+
+# if( ${CMAKE_CXX_COMPILER_ID} STREQUAL GNU )
+#   if( ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.9 )
+#         message( FATAL_ERROR "Insufficient GCC version. Minimum is GCC 4.9" )
+#     endif()
+# elseif( ${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC )
+#     if( ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 19 )
+#         message( FATAL_ERROR "Insufficient MSVC version. e Visual Studio 2015" )
+#     endif()
+# endif()
+
+
+set( VQ_BUILD_DIR       ${PROJECT_ROOT}/builds )
+set( VQ_OUTPUT_DIR      ${PROJECT_ROOT}/output )
+set( VQ_SRC_DIR         ${PROJECT_ROOT}/source )
+set( VQ_TEST_DIR        ${PROJECT_ROOT}/tests )
+
 
 if( UNIX )
     SET( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH}:$ORIGIN" )
@@ -335,42 +339,3 @@ function( vq_dump_vars )
     endforeach()
     message( STATUS "XXXXXXXXXX Dirs ${PROJECT_NAME} XXXXXXXXXXXXXXX" )
 endfunction()
-
-
-
-#function( vq_add_module REL_INCL_PATH MODULE_NAME )
-#    get_property( IS_SUBPROJECT GLOBAL PROPERTY ${MODULE_NAME}_SUBPROJECT )
-#    if( IS_SUBPROJECT )
-#        message( STATUS "In Source Include: ${MODULE_NAME}" )
-#        vq_get_prop( MDL_INCL_DIR INCLUDE_DIR_${MODULE_NAME} )
-#        vq_get_prop( MDL_BUILD_PATH BIN_DIR_${MODULE_NAME} )
-#        set( VQ_INCLUDE_DIRS ${VQ_INCLUDE_DIRS} ${MDL_INCL_DIR} PARENT_SCOPE )
-#        set( VQ_LINK_DIRS ${VQ_LINK_DIRS} ${MDL_BUILD_PATH} PARENT_SCOPE )
-#        set( VQ_BIN_DIR ${VQ_BIN_DIR} ${MDL_BUILD_PATH} PARENT_SCOPE )
-#        set( VQ_DEPENDENCIES ${VQ_DEPENDENCIES} ${MODULE_NAME} PARENT_SCOPE )
-#    else()
-#        set( ABS_INCL_DIR ${VQ_OUTPUT_DIR}/include/${REL_INCL_PATH} )
-#        set( VQ_INCLUDE_DIRS ${VQ_INCLUDE_DIRS} ${ABS_INCL_DIR} PARENT_SCOPE )
-#        set( VQ_LINK_DIRS ${VQ_LINK_DIRS} ${VQ_OUTPUT_DIR}/lib PARENT_SCOPE )
-#        set( VQ_BIN_DIRS ${VQ_BIN_DIRS} ${VQ_OUTPUT_DIR}/bin PARENT_SCOPE )
-#        message( STATUS "Out Source Include: ${MODULE_NAME}" )
-#    endif()
-#    set( DEBUG_LIB ${LIB_PREFIX}${MODULE_NAME}d${LIB_EXT} )
-#    set( RELEASE_LIB ${LIB_PREFIX}${MODULE_NAME}${LIB_EXT} )
-#    set( VQ_LIBS_DEBUG  ${VQ_LIBS_DEBUG} ${DEBUG_LIB} PARENT_SCOPE )
-#    set( VQ_LIBS_RELEASE ${VQ_LIBS_RELEASE} ${RELEASE_LIB} PARENT_SCOPE )
-#endfunction()
-
-#macro( vq_install_lib )
-#    install( TARGETS ${PROJECT_NAME} DESTINATION lib )
-#endmacro( vq_install_lib )
-
-
-#macro( vq_install_bin )
-#    install( TARGETS ${PROJECT_NAME} DESTINATION bin )
-#    if( WIN32 )
-#        install_qt5_executable( "bin/${PROJECT_NAME}.exe" )
-#    else()
-#        install_qt5_executable( "bin/${PROJECT_NAME}" )
-#    endif()
-#endmacro( vq_install_bin )
