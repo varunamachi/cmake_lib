@@ -29,14 +29,14 @@ VQ_PROJECT_DIR which points to the root of the project directory structure.
 build scripts should use this directory for generating build directories.
 
 Example project specific cmake:
-```
+```cmake
 file( TO_CMAKE_PATH "$ENV{VQ_ROOT}" VQ_ROOT )
 set( PROJECT_ROOT ${VQ_ROOT} )
 include( ${PROJECT_ROOT}/cmake/cmake_lib/core.cmake)
 ```  
 
 Example CMakeLists.txt that defines a project 'my_project':
-```
+```cmake
 project( my_project )
 cmake_minimum_required(VERSION 3.1)
 cmake_policy( SET CMP0020 NEW )
@@ -57,3 +57,6 @@ vq_create_sharedlib()
 #vq_create_staticlib()
 #vq_create_executable()
 vq_install()
+```
+
+These CMake files were part of Quartz (https://github.com/varunamachi/quartz). Now separated out so that it can be used by differnt projects.
