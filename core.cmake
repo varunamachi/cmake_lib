@@ -371,7 +371,7 @@ macro( vq_install )
     elseif( MODULE_TYPE STREQUAL "SHARED_LIBRARY" )
         vq_install_headers()
         install( TARGETS ${PROJECT_NAME}
-            LIBRARY DESTINATION "lib"
+            LIBRARY DESTINATION "bin/${CMAKE_BUILD_TYPE}"
             ARCHIVE DESTINATION "lib"
             RUNTIME DESTINATION "bin/${CMAKE_BUILD_TYPE}"
             BUNDLE DESTINATION "bin/${CMAKE_BUILD_TYPE}"
