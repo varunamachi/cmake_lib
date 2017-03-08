@@ -344,7 +344,7 @@ endmacro()
 
 
 macro( vq_install_plugin )
-    install( TARGETS ${PROJECT_NAME} DESTINATION Bin/plugins )
+    install( TARGETS ${PROJECT_NAME} DESTINATION bin/plugins )
 endmacro( vq_install_plugin )
 
 macro( vq_install_headers )
@@ -371,18 +371,13 @@ macro( vq_install )
     elseif( MODULE_TYPE STREQUAL "SHARED_LIBRARY" )
         vq_install_headers()
         install( TARGETS ${PROJECT_NAME}
-            LIBRARY DESTINATION "lib"
+            LIBRARY DESTINATION "bin"
             ARCHIVE DESTINATION "lib"
             RUNTIME DESTINATION "bin/${CMAKE_BUILD_TYPE}"
             BUNDLE DESTINATION "bin/${CMAKE_BUILD_TYPE}"
             FRAMEWORK DESTINATION "bin" )
     elseif( MODULE_TYPE STREQUAL "EXECUTABLE" )
         install( TARGETS ${PROJECT_NAME} DESTINATION ${BIN_OUTPUT_DIR} )
-#        if( WIN32 )
-#            install_qt5_executable( "${BIN_OUTPUT_DIR}/${PROJECT_NAME}.exe" )
-#        else()
-#            install_qt5_executable( "${BIN_OUTPUT_DIR}/${PROJECT_NAME}" )
-#        endif()
     else()
         message( FATAL "Install failed: unrecognized target type" )
     endif()
